@@ -21,18 +21,18 @@ dependencies:
     specifier: ^4.1.1
     version: 4.1.1(vue@3.5.12)
   vue:
-    specifier: ^3.0.4
+    specifier: ^3.5.12
     version: 3.5.12(typescript@4.9.5)
 
 devDependencies:
   '@vue/compiler-sfc':
-    specifier: ^3.0.4
+    specifier: ^3.5.12
     version: 3.5.12
   '@vuedx/typecheck':
-    specifier: ^0.3.1-insiders-1606311019.0
+    specifier: 0.3.1-insiders-1609155664.0
     version: 0.3.1-insiders-1609155664.0
   '@vuedx/typescript-plugin-vue':
-    specifier: ^0.3.1-insiders-1606311019.0
+    specifier: 0.3.1-insiders-1609155664.0
     version: 0.3.1-insiders-1609155664.0
   autoprefixer:
     specifier: ^10.4.20
@@ -44,7 +44,7 @@ devDependencies:
     specifier: ^3.4.14
     version: 3.4.14
   typescript:
-    specifier: ^4.1.2
+    specifier: ^4.9.5
     version: 4.9.5
   vite:
     specifier: 1.0.0-rc.13

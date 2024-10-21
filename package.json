@@ -11,16 +11,16 @@
     "heroicons": "^2.1.5",
     "primeicons": "^7.0.0",
     "primevue": "^4.1.1",
-    "vue": "^3.0.4"
+    "vue": "^3.5.12"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.4",
-    "@vuedx/typecheck": "^0.3.1-insiders-1606311019.0",
-    "@vuedx/typescript-plugin-vue": "^0.3.1-insiders-1606311019.0",
+    "@vue/compiler-sfc": "^3.5.12",
+    "@vuedx/typecheck": "0.3.1-insiders-1609155664.0",
+    "@vuedx/typescript-plugin-vue": "0.3.1-insiders-1609155664.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
-    "typescript": "^4.1.2",
+    "typescript": "^4.9.5",
     "vite": "1.0.0-rc.13"
   }
 }

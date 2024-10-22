@@ -1,66 +1,94 @@
 <template>
-    <div class="container-fluid bg-black">
-        <div>
-            <h1 class="text-white text-center text-7xl">OUR PROJECTS</h1>
-            <h3 class="text-gray-300 text-center text-2xl">
-                We believe our work speaks for itself. Browse our
-            </h3>
-            <h3 class="text-gray-300 text-center text-2xl">most recent projects below.</h3>
+    <div class="container-fluid bg-black py-8">
+      <!-- Title Section -->
+      <div class="mb-8">
+        <h1 class="text-white text-center text-4xl md:text-5xl lg:text-7xl font-bold">OUR PROJECTS</h1>
+        <h3 class="text-gray-300 text-center text-lg md:text-2xl">
+          We believe our work speaks for itself. Browse our
+        </h3>
+        <h3 class="text-gray-300 text-center text-lg md:text-2xl">most recent projects below.</h3>
+      </div>
+  
+      <!-- Project Grid Section -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+        <!-- Large Card -->
+        <div class="md:col-span-2">
+          <div class="relative bg-gray-400 border rounded-lg h-80 md:h-96 bg-cover bg-center" :style="bgStyle1">
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <h1 class="text-white text-2xl md:text-4xl font-bold">Hello World !</h1>
+            </div>
+          </div>
         </div>
-
-        <div class="grid grid-cols-3 gap-4 p-4">
-            <div class="col-span-2">
-                <div class="bg-gray-400 border rounded-lg h-full bg-cover bg-cente" :style="bgStyle1">
-                    <h1 class="text-white m-1">Hello World !</h1>
-                </div>
+        
+        <!-- Right Column Cards -->
+        <div class="md:col-span-1">
+          <!-- Upper Small Card -->
+          <div class="relative border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle1">
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
             </div>
-            <div class="col-span-1">
-                <div>
-                    <div class="border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle1">
-                        <h1 class="text-white m-1">Bonjour !!!</h1>
-                    </div>
-                    <div class="border rounded-lg mb-1 h-64 bg-cover bg-center" :style="bgStyle2">
-                        <h1 class="text-white m-1">Bonjour !!!</h1>
-                    </div>
-                </div>
+          </div>
+          <!-- Lower Small Card -->
+          <div class="relative border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle2">
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
             </div>
+          </div>
         </div>
-
-        <div class="grid grid-cols-3 gap-4 p-4">
-            <div class="col-span-1">
-                <div class="border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle1">
-                    <h1 class="text-white m-1">Bonjour !!!</h1>
-                </div>
-            </div>
-            <div class="col-span-1">
-                <div class="border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle1">
-                    <h1 class="text-white m-1">Bonjour !!!</h1>
-                </div>
-            </div>
-            <div class="col-span-1">
-                <div class="border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle1">
-                    <h1 class="text-white m-1">Bonjour !!!</h1>
-                </div>
-            </div>
+      </div>
+  
+      <!-- Second Row Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+        <!-- Card 1 -->
+        <div class="relative border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle1">
+          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
+          </div>
         </div>
+  
+        <!-- Card 2 -->
+        <div class="relative border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle1">
+          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
+          </div>
+        </div>
+  
+        <!-- Card 3 -->
+        <div class="relative border rounded-lg mb-2 h-64 bg-cover bg-center" :style="bgStyle1">
+          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
+          </div>
+        </div>
+      </div>
+  
+      <!-- White Card Section -->
+      <div class="flex justify-center mt-8">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg text-center">
+          <h2 class="text-black text-2xl font-bold mb-4">Let's Work Together</h2>
+          <p class="text-gray-600 text-base">
+            Whether you need stunning video editing, color grading, or visual effects, we are ready to bring your project to life. Contact us today and let's make something great together.
+          </p>
+        </div>
+      </div>
     </div>
-</template>
-
-<script setup lang="ts">
-import img1 from '../assets/bg/service1.jpg';
-import img2 from '../assets/bg/service2.jpg';
-import { computed } from 'vue';
-
-// Computed property for the background styles
-const bgStyle1 = computed(() => ({
+  </template>
+  
+  <script setup lang="ts">
+  import img1 from '../assets/bg/service1.jpg';
+  import img2 from '../assets/bg/service2.jpg';
+  import { computed } from 'vue';
+  
+  // Computed property for the background styles
+  const bgStyle1 = computed(() => ({
     backgroundImage: `url(${img1})`,
-}));
-
-const bgStyle2 = computed(() => ({
+  }));
+  
+  const bgStyle2 = computed(() => ({
     backgroundImage: `url(${img2})`,
-}));
-</script>
-
-<style scoped>
-/* If you need to apply additional styles, you can do it here */
-</style>
+  }));
+  </script>
+  
+  <style scoped>
+  /* Add additional styles if necessary */
+  </style>
+  

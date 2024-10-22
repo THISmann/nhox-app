@@ -13,7 +13,7 @@
   
   <script setup lang="ts">
   import { ref } from "vue";
-  import videoSrc from "../assets/bg/video2.mp4";
+  import videoSrc from "../assets/bg/video3.mp4";
   
   // Props
   const props = defineProps<{

@@ -50,7 +50,7 @@
       </div>
   
       <!-- Cart Section -->
-      <div class="mt-8">
+      <!-- <div class="mt-8">
         <h2 class="text-white text-2xl mb-4">Selected Items</h2>
         <div v-if="cart.length === 0" class="text-gray-300">No items selected.</div>
         <ul class="bg-gray-800 p-4 rounded-lg">
@@ -59,7 +59,7 @@
             <span class="text-red-400 font-bold">{{ item.price }}</span>
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </template>
   

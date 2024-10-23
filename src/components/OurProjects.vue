@@ -1,114 +1,41 @@
 <template>
-    <div class="container-fluid bg-black py-8">
-      <!-- Title Section -->
-      <div class="mb-8">
-        <h1 class="text-white text-center text-4xl md:text-5xl lg:text-7xl font-bold">OUR PROJECTS</h1>
-        <h3 class="text-gray-300 text-center text-lg md:text-2xl">
-          We believe our work speaks for itself. Browse our
-        </h3>
-        <h3 class="text-gray-300 text-center text-lg md:text-2xl">most recent projects below.</h3>
-      </div>
-  
-      <!-- Project Grid Section -->
-       
-      
-  
-      <!-- Second Row Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-        <!-- Card 1 -->
-        <div class="relative border rounded-lg mb-2 h-96 bg-cover bg-center" :style="bgStyle4">
-          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
-          </div>
-        </div>
-  
-        <!-- Card 2 -->
-        <div class="relative border rounded-lg mb-2 h-96 bg-cover bg-center" :style="bgStyle5">
-          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
-          </div>
-        </div>
-  
-        <!-- Card 3 -->
-        <div class="relative border rounded-lg mb-2 h-96 bg-cover bg-center" :style="bgStyle6">
-          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
-          </div>
-        </div>
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 bg-black gap-4 p-4">
+        <div v-for="(image, index) in projectImages" :key="index"
+            class="relative border rounded-lg mb-2 h-96 bg-cover bg-center"
+            :style="{ backgroundImage: `url(${image.src})` }">
 
-       <!-- Second Row Grid -->
-       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-        <!-- Card 1 -->
-        <div class="relative border rounded-lg mb-2 h-96 bg-cover bg-center" :style="bgStyle3">
-          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
-          </div>
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div class="text-center">
+                    <h1 class="text-white text-xl font-semibold mb-4">{{ image.alt }}</h1>
+                    <a :href="image.link" class="text-white underline">
+                        Visit Link
+                    </a>
+                </div>
+            </div>
         </div>
-  
-        <!-- Card 2 -->
-        <div class="relative border rounded-lg mb-2 h-96 bg-cover bg-center" :style="bgStyle2">
-          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
-          </div>
-        </div>
-  
-        <!-- Card 3 -->
-        <div class="relative border rounded-lg mb-2 h-96 bg-cover bg-center" :style="bgStyle1">
-          <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <h1 class="text-white text-xl font-semibold">Bonjour !!!</h1>
-          </div>
-        </div>
-      </div>
-  
-      <!-- White Card Section -->
-      <div class="flex justify-center mt-8">
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg text-center">
-          <h2 class="text-black text-2xl font-bold mb-4">Let's Work Together</h2>
-          <p class="text-gray-600 text-base">
-            Whether you need stunning video editing, color grading, or visual effects, we are ready to bring your project to life. Contact us today and let's make something great together.
-          </p>
-        </div>
-      </div>
     </div>
-  </template>
-  
-  <script setup lang="ts">
-  import img1 from '../assets/photos/photo01.jpg';
-  import img2 from '../assets/photos/photo02.jpg';
-  import img3 from '../assets/photos/photo07.png';
-  import img4 from '../assets/photos/photo04.jpg';
-  import img5 from '../assets/photos/photo05.png';
-  import img6 from '../assets/photos/photo06.png';
-  import { computed } from 'vue';
-  
-  // Computed property for the background styles
-  const bgStyle1 = computed(() => ({
-    backgroundImage: `url(${img1})`,
-  }));
-  
-  const bgStyle2 = computed(() => ({
-    backgroundImage: `url(${img2})`,
-  }));
+</template>
 
-  const bgStyle3 = computed(() => ({
-    backgroundImage: `url(${img3})`,
-  }));
+<script setup lang="ts">
 
-  const bgStyle4 = computed(() => ({
-    backgroundImage: `url(${img4})`,
-  }));
+import img1 from '../assets/photos/photo01.jpg';
+import img2 from '../assets/photos/photo02.jpg';
+import img3 from '../assets/photos/photo03.jpg';
+import img4 from '../assets/photos/photo04.jpg';
+import img5 from '../assets/photos/photo05.png';
+import img6 from '../assets/photos/photo07.png';
+import { computed } from 'vue'; 
 
-  const bgStyle5 = computed(() => ({
-    backgroundImage: `url(${img5})`,
-  }));
+const projectImages = [
+    { src: img1, alt: 'Advert', link: 'https://disk.yandex.ru/i/fm8PA2f0oJFYAg' },
+    { src: img2, alt: 'music', link: 'https://disk.yandex.ru/i/rMYW4iVmyii4cA' },
+    { src: img3, alt: 'Cultural event', link: 'https://disk.yandex.ru/i/4jLSzeX5EJw1YA' },
+    { src: img4, alt: 'Clip ', link: 'https://disk.yandex.ru/i/gFQWA0SsfPIWJw' },
+    { src: img5, alt: 'Church ', link: 'https://disk.yandex.ru/d/3Y0f1kPjTCKT7Q' },
+    { src: img6, alt: 'Wedding', link: 'https://disk.yandex.ru/i/x8oI8a-as6OMZg' },
+];
+</script>
 
-  const bgStyle6 = computed(() => ({
-    backgroundImage: `url(${img6})`,
-  }));
-  </script>
-  
-  <style scoped>
-  /* Add additional styles if necessary */
-  </style>
-  
+<style scoped>
+/* Add any additional styling if needed */
+</style>

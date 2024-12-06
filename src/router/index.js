@@ -1,7 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import AboutView from '../views/AboutView.vue';
+import Realisation from '../views/DashboardElement/Realisation.vue';
 import LoginPage from '../views/LoginPage.vue';
+import Dashboard from '../views/Dashboard.vue';
+import Page1 from '../views/DashboardElement/page1.vue';
+import Page2 from '../views/DashboardElement/page2.vue';
+import RealisationItem from '../views/RealisationItem.vue';
 
 // Define routes
 const routes = [
@@ -16,14 +20,37 @@ const routes = [
     component: LoginPage,
   },
   {
-    path: '/admin',
-    name: 'admin',
-    component: AboutView,
-    // Protected route, check for authentication
+    path: '/realisation/:id',
+    name: 'RealisationItem',
+    component: RealisationItem
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
     meta: {
       requiresAuth: true,
     },
-  },
+    children: [
+        {
+          path: '',
+          name: 'page2',
+          component: Page2, // Default page
+        },
+        {
+          path: 'realisation',
+          name: 'realisation',
+          component: Realisation, // Page1
+        },
+        {
+          path: 'page2',
+          name: 'page2',
+          component: Page2, // Page2
+        },
+        // Add more pages as needed
+      ]
+  }
+ 
 ];
 
 // Create router instance

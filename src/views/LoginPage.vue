@@ -53,7 +53,7 @@
     if (username.value === validUsername && password.value === validPassword) {
       // Store the logged-in state (can be Vuex or localStorage if needed)
       localStorage.setItem('isAuthenticated', 'true');
-      router.push('/admin'); // Redirect to the admin page after login
+      router.push('/dashboard'); // Redirect to the admin page after login
     } else {
       alert('Invalid credentials');
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-100 p-4">
+    <div class="min-h-screen bg-gray-100 p-4 overflow-y-auto">
       <!-- Button to add a new article -->
       <button @click="showAddArticleForm = true" class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg">
         Add Article
@@ -123,7 +123,7 @@
   // Fetch articles from the server
   const fetchArticles = async () => {
     try {
-      const response = await axios.get('http://localhost:3003/articles');
+      const response = await axios.get('http://localhost:3005/api/articles');
       articles.value = response.data;
     } catch (error) {
       console.error('Error fetching articles:', error);
@@ -179,7 +179,7 @@
   // Submit the add form to create a new article
   const submitAddArticle = async () => {
     try {
-      await axios.post('http://localhost:3003/articles', newArticle.value);
+      await axios.post('http://localhost:3005/api/articles', newArticle.value);
       Swal.fire('Success!', 'Article added successfully.', 'success');
       fetchArticles(); // Refresh the articles list
       showAddArticleForm.value = false;

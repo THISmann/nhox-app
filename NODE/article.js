@@ -45,9 +45,11 @@ const articleSchema = new mongoose.Schema({
   description: { type: String, required: true },
   text: { type: String, required: true },
   imgSrc: { type: String, required: true },
-  link: { type: String, required: true }
-  //photos: [{ type: String }]  // Array to store the filenames of photos
+  link: { type: String, required: false },
+  gallery: { type: [String], required: true } // Define gallery as an array of strings
 });
+
+
 
 // Create the Article model based on the schema
 const Article = mongoose.model('Article', articleSchema);
@@ -56,7 +58,7 @@ const Article = mongoose.model('Article', articleSchema);
 app.post('/articles',  async (req, res) => {
   try {
     // Extract article data from the request body
-    const { title, description, text , imgSrc , link } = req.body;
+    const { title, description, text , imgSrc , link , gallery } = req.body;
 
     // Collect photo filenames from the uploaded files
     //const photos = req.files.map(file => file.filename);
@@ -67,7 +69,8 @@ app.post('/articles',  async (req, res) => {
       description,
       text,
       imgSrc,
-      link
+      link,
+      gallery
     });
 
     // Save the article to the database

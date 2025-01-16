@@ -61,6 +61,7 @@ export default {
         { name: "Accueil", link: "/dashboard", icon: "fas fa-home" },
         { name: "Réalisation", link: "/dashboard/realisation", icon: "fas fa-cogs" },
         { name: "Boutique", link: "/dashboard/page2", icon: "fas fa-chart-line" },
+        { name: "Order", link: "/dashboard/order", icon: "fas fa-chart-line" },
         // Add more items as needed
       ],
     };

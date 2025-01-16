@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const productRoutes = require("./routes/product");
 const articleRoutes = require("./routes/article");
+const orderRoutes = require("./routes/order")
 const cors = require('cors');  // Import the CORS module
 
 const app = express();
@@ -22,6 +23,8 @@ mongoose
 // Routes
 app.use("/api/products", productRoutes);
 app.use("/api/articles", articleRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/uploads", express.static("uploads"));
 
 // Start the server
 app.listen(PORT, () => {

@@ -42,7 +42,7 @@ import logo3 from "../assets/logo/bg-3.png";
 const services = [
   {
     img: logo1,
-    title: "Longs Metrages",
+    title: "Longs Metrages & Films",
     description: "We provide top-notch editing for feature films, handling the most complex footage with precision."
   },
   {

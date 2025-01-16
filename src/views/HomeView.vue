@@ -7,7 +7,7 @@
     <ServiceDetail />
     <ServiceDescription/>
     <FeedbackService />
-    <ShopSection />
+    <ShopSection /> 
     <FooterSection />
     
   </template>
@@ -23,13 +23,12 @@
   import ServiceDescription from '../components/ServiceDescription.vue';
   import FeedbackService from "../components/FeedbackService.vue";
   import FooterSection from "../components/FooterSection.vue";
-  import ShopSection from "../components/ShopSection.vue";
-  
+  import ShopSection from "../components/ShopSection.vue"; 
    
   export default defineComponent({
     name: 'App',
     components: {
-      NavBar, Header, OurServices, VideoSection, OurProjects, ServiceDetail ,ServiceDescription , FeedbackService ,FooterSection ,ShopSection
+      NavBar, Header, OurServices, VideoSection, OurProjects, ServiceDetail ,ServiceDescription , FeedbackService ,FooterSection ,ShopSection  
     }
   })
   </script>

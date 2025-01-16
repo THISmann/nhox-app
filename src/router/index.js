@@ -6,6 +6,7 @@ import Dashboard from '../views/Dashboard.vue';
 import Page1 from '../views/DashboardElement/page1.vue';
 import Page2 from '../views/DashboardElement/page2.vue';
 import RealisationItem from '../views/RealisationItem.vue';
+import Order from "../views/DashboardElement/filterOrder.vue";
 
 // Define routes
 const routes = [
@@ -47,6 +48,11 @@ const routes = [
           name: 'page2',
           component: Page2, // Page2
         },
+        {
+          path: 'order',
+          name: 'order',
+          component: Order, // Page2
+        }
         // Add more pages as needed
       ]
   }

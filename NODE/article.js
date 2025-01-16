@@ -26,18 +26,32 @@ mongoose.connect('mongodb://localhost:27017/articleDB', {
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Define the storage for file uploads (for photos)
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'uploads/');  // Set the directory to store uploaded files
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + path.extname(file.originalname));  // Use timestamp as filename
-//   }
-// });
+// Configure Multer pour stocker les fichiers dans le dossier "uploads"
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Dossier de destination
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname); // Nom unique pour chaque fichier
+  }
+});
 
-// Initialize multer for file upload handling
-//const upload = multer({ storage: storage });
+// Filtre pour accepter uniquement les fichiers image
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true); // Accepte le fichier
+  } else {
+    cb(new Error('Only image files are allowed'), false); // Rejette le fichier
+  }
+};
+
+// Initialisation de multer
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 } // Taille max de 5 Mo par fichier
+});
+
 
 // Define the Article schema for MongoDB using Mongoose
 const articleSchema = new mongoose.Schema({
@@ -49,7 +63,33 @@ const articleSchema = new mongoose.Schema({
   gallery: { type: [String], required: true } // Define gallery as an array of strings
 });
 
+// Add images to the gallery of an article
+app.post('/articles/:id/upload-gallery', upload.array('gallery', 10), async (req, res) => {
+  // try {
+  //   // Récupérer l'article par ID
+  //   const articleId = req.params.id;
+  //   const article = await Article.findById(articleId);
+  //   console.log(req.body);
+  //   if (!article) {
+  //     return res.status(404).json({ error: 'Article not found' });
+  //   }
+   
+  //   // Ajouter les chemins des images uploadées à la galerie de l'article
+  //   const imagePaths = req.files.map(file => file.filename);
+  //   article.gallery = [...article.gallery, ...imagePaths];
 
+  //   // Sauvegarder l'article mis à jour
+  //   await article.save();
+
+  //   res.status(200).json({
+  //     message: 'Images successfully uploaded and added to the article',
+  //     article
+  //   });
+  // } catch (err) {
+  //   res.status(500).json({ error: 'Failed to upload images', message: err.message });
+  // }
+  console.log(req.body);
+});
 
 // Create the Article model based on the schema
 const Article = mongoose.model('Article', articleSchema);
@@ -62,7 +102,7 @@ app.post('/articles',  async (req, res) => {
 
     // Collect photo filenames from the uploaded files
     //const photos = req.files.map(file => file.filename);
-    console.log(req.body);
+ 
     // Create a new article document
     const newArticle = new Article({
       title,
@@ -84,9 +124,10 @@ app.post('/articles',  async (req, res) => {
 
 // Endpoint to get all articles
 app.get('/articles', async (req, res) => {
+
   try {
     // Fetch all articles from the database
-    const articles = await Article.find();
+    const articles = await Article.find(); 
     res.status(200).json(articles);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch articles', message: err.message });

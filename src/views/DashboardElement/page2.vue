@@ -157,11 +157,13 @@
     </div>
   </div>
 </template>
- 
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useProductStore } from '../../stores/productStore';
+const productStore = useProductStore();
 
 // Reactive States
 const products = ref([]); // List of products
@@ -182,6 +184,7 @@ const fetchProducts = async () => {
     const response = await axios.get('http://localhost:3005/api/products');
     products.value = response.data;
     currentImageIndex.value = products.value.map(() => 0); // Initialize image index for each product
+    productStore.setProducts(response.data);
   } catch (error) {
     console.error('Error fetching products:', error);
     Swal.fire({
@@ -192,8 +195,6 @@ const fetchProducts = async () => {
   }
 };
 
-// Lifecycle Hook to Fetch Products on Mount
-onMounted(() => fetchProducts());
 
 // Carousel Navigation
 const prevImage = (index) => {
@@ -256,6 +257,33 @@ const handleFileInput = (event) => {
   selectedImages.value = event.target.files;
 };
 
+// delete product 
+const confirmDelete = async (productId) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This action cannot be undone.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        // Call the store action to delete the product
+        await productStore.deleteProduct(productId);
+
+        Swal.fire("Deleted!", "Product has been successfully deleted.", "success");
+      } catch (error) {
+        console.error("Error deleting product:", error);
+        Swal.fire("Error", "Failed to delete the product. Please try again.", "error");
+      }
+    }
+  });
+};
+
+
+
 // Add Photos to Product
 const addPhotosToProduct = async () => {
   if (!currentProductId.value || selectedImages.value.length === 0) {
@@ -300,4 +328,8 @@ const addPhotosToProduct = async () => {
     });
   }
 };
+
+
+// Lifecycle Hook to Fetch Products on Mount
+onMounted(() => fetchProducts());
 </script>

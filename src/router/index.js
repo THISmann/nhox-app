@@ -7,6 +7,9 @@ import Page1 from '../views/DashboardElement/page1.vue';
 import Page2 from '../views/DashboardElement/page2.vue';
 import RealisationItem from '../views/RealisationItem.vue';
 import Order from "../views/DashboardElement/filterOrder.vue";
+import { useArticleStore } from '../stores/articleStore'; // Import article store
+import { useProductStore } from '../stores/productStore'; // Import product store
+import { useOrderStore } from '../stores/orderStore'; // Import order store
 
 // Define routes
 const routes = [
@@ -56,7 +59,6 @@ const routes = [
         // Add more pages as needed
       ]
   }
- 
 ];
 
 // Create router instance
@@ -76,5 +78,7 @@ router.beforeEach((to, from, next) => {
     next(); // Continue to the route
   }
 });
+
+ 
 
 export default router;

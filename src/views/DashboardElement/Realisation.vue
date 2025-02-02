@@ -4,11 +4,11 @@
     <button @click="showAddArticleForm = true" class="mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg">
       Add Article
     </button>
-
+    <p>State: {{ connected }}</p>
     <!-- Article list section -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       <!-- Loop through the articles and display them -->
-      <div v-for="(article, index) in articles" :key="article._id"
+      <div v-for="(article, index) in articleStore.articles" :key="article._id"
         class="bg-white rounded-lg shadow-md overflow-hidden">
         <img :src="`http://localhost:3005/${article.gallery}`" alt="Article image" class="w-full h-48 object-cover" />
         <div class="p-4">
@@ -141,9 +141,15 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted, onUnmounted, computed } from "vue";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useArticleStore } from "../../stores/articleStore";
+import { state, socket } from "../../socket";
+// Computed property for connection state
+const connected = computed(() => state.connected);
+// Store
+const articleStore = useArticleStore();
 
 // State
 const articles = ref([]); // List of articles
@@ -160,6 +166,7 @@ const newArticle = reactive({
   text: "",
   imgSrc: "",
 });
+
 const articleToEdit = reactive({
   _id: "",
   title: "",
@@ -172,15 +179,6 @@ const articleToEdit = reactive({
 const images = ref(null); // Add article image
 const editImages = ref(null); // Edit article image
 
-// Fetch articles from the API
-const fetchArticles = async () => {
-  try {
-    const response = await axios.get("http://localhost:3005/api/articles");
-    articles.value = response.data;
-  } catch (error) {
-    console.error("Error fetching articles:", error);
-  }
-};
 
 // Reset new article form
 const resetNewArticle = () => {
@@ -203,13 +201,10 @@ const submitAddArticle = async () => {
     const imageFile = images.value?.files[0];
     if (imageFile) formData.append("gallery", imageFile);
 
-    await axios.post("http://localhost:3005/api/articles", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
 
     Swal.fire("Success!", "Article added successfully.", "success");
     showAddArticleForm.value = false;
-    fetchArticles();
+    articleStore.addArticle(formData);
     resetNewArticle();
   } catch (error) {
     console.error("Error adding article:", error);
@@ -236,6 +231,7 @@ const submitEditArticle = async () => {
     );
     // Update the articles list
     const updatedArticle = response.data;
+    articleStore.setArticles(response.data);
     const index = articles.value.findIndex((article) => article._id === updatedArticle._id);
     if (index !== -1) {
       articles.value[index] = updatedArticle;
@@ -277,7 +273,7 @@ const addPhotosToArticle = async () => {
     Swal.fire("Success!", "Images uploaded successfully.", "success");
     showAddPhotos.value = false;
     selectedImages.value = [];
-    fetchArticles();
+    // fetchArticles();
   } catch (error) {
     console.error("Error uploading images:", error);
     Swal.fire("Error", "Failed to upload images. Please try again.", "error");
@@ -302,9 +298,9 @@ const confirmDelete = (articleId) => {
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3005/api/articles/${articleId}`);
+        await articleStore.deleteArticle(articleId);
         Swal.fire("Deleted!", "Article has been deleted.", "success");
-        fetchArticles();
+        // fetchArticles();
       } catch (error) {
         console.error("Error deleting article:", error);
         Swal.fire("Error", "Failed to delete the article. Please try again.", "error");
@@ -312,7 +308,51 @@ const confirmDelete = (articleId) => {
     }
   });
 };
+onMounted(() => {
+  // Supprime les anciens écouteurs pour éviter les doublons
+  socket.off("article_update");
 
-// Initialize and fetch articles on mount
-fetchArticles();
+  // Ajout d'un seul écouteur pour gérer les mises à jour des articles
+  socket.on("article_update", (data) => {
+    console.log("Socket received article update:", data);
+
+    // Handle real-time updates (create, update, delete logic)
+    if (data.action === "create") {
+      // Vérifie si l'article existe déjà avant de l'ajouter
+      const existingArticle = articleStore.articles.find(
+        (article) => article._id === data.article._id
+      );
+      if (!existingArticle) {
+        articleStore.articles.push(data.article);
+        console.log("articles after create:", articleStore.articles);
+      } else {
+        console.warn("Article already exists with ID:", data.article._id);
+      }
+    } else if (data.action === "update") {
+      const index = articleStore.articles.findIndex(
+        (article) => article._id === data.article._id
+      );
+      if (index !== -1) {
+        articleStore.articles[index] = data.article;
+      } else {
+        console.warn("Article to update not found with ID:", data.article._id);
+      }
+    } else if (data.action === "delete") {
+      articleStore.articles = articleStore.articles.filter(
+        (article) => article._id !== data.articleId
+      );
+      console.log("articles after delete:", articleStore.articles);
+    }
+
+    // Mise à jour facultative de localStorage
+    localStorage.setItem("articles", JSON.stringify(articleStore.articles));
+  });
+});
+
+onUnmounted(() => {
+  // Nettoyage des écouteurs lors du démontage
+  socket.off("article_update");
+});
+
+
 </script>

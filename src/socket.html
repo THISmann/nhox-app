@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket.IO Client</title>
+  <h1>Socket.IO Client</h1>
+  <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      padding: 20px;
+    }
+    #messages {
+      max-width: 500px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    #messages p {
+      margin: 5px 0;
+    }
+    #messageForm {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    #messageInput {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    #sendMessage {
+      padding: 10px 15px;
+      margin-left: 10px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #sendMessage:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Socket.IO Client</h1>
+  <div id="messages">
+    <p><strong>Messages:</strong></p>
+  </div>
+
+  <form id="messageForm">
+    <input type="text" id="messageInput" placeholder="Type a message..." />
+    <button type="submit" id="sendMessage">Send</button>
+  </form>
+
+  <script>
+    // Connect to the server
+    const socket = io('http://localhost:3003'); // Replace with your server's URL if hosted remotely
+
+    // DOM elements
+    const messagesDiv = document.getElementById('messages');
+    const messageForm = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+
+    // Listen for connection
+    socket.on('connect', () => {
+      console.log('Connected to Socket.IO server:', socket.id);
+      const msg = document.createElement('p');
+      msg.textContent = `Connected to server (Socket ID: ${socket.id})`;
+      messagesDiv.appendChild(msg);
+    });
+
+    // Listen for disconnect
+    socket.on('disconnect', (reason) => {
+      console.log('Disconnected from server:', reason);
+      const msg = document.createElement('p');
+      msg.textContent = 'Disconnected from server.';
+      messagesDiv.appendChild(msg);
+    });
+
+    // Listen for custom messages
+    socket.on('article_update', (data) => {
+      console.log('New article update received:', data);
+      const msg = document.createElement('p');
+      msg.textContent = `New article update: ${JSON.stringify(data)}`;
+      messagesDiv.appendChild(msg);
+    });
+
+    // Handle form submission
+    messageForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const message = messageInput.value.trim();
+      if (message) {
+        // Send message to server
+        socket.emit('client_message', { text: message });
+        messageInput.value = '';
+
+        const msg = document.createElement('p');
+        msg.textContent = `You: ${message}`;
+        messagesDiv.appendChild(msg);
+      }
+    });
+  </script>
+
+</body>
+</html>

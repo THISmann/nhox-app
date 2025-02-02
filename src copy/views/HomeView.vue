@@ -1,0 +1,40 @@
+<template>
+  <NavBar />
+  <Header />
+  <OurServices />
+  <VideoSection />
+  <OurProjects />
+  <ServiceDetail />
+  <ServiceDescription />
+  <FeedbackService />
+  <ShopSection />
+  <FooterSection />
+</template>
+
+<script lang="ts" setup>
+import { onMounted } from 'vue';
+import { useArticleStore } from '../stores/articleStore'; // Import the article store
+import { useProductStore } from '../stores/productStore'; // Import the product store
+
+// Import the components
+import NavBar from '../components/NavBar.vue';
+import Header from '../components/Header.vue';
+import OurServices from '../components/OurServices.vue';
+import VideoSection from '../components/VideoSection.vue';
+import OurProjects from '../components/OurProjects.vue';
+import ServiceDetail from '../components/ServiceDetail.vue';
+import ServiceDescription from '../components/ServiceDescription.vue';
+import FeedbackService from "../components/FeedbackService.vue";
+import FooterSection from "../components/FooterSection.vue";
+import ShopSection from "../components/ShopSection.vue"; 
+
+// Access the stores
+const articleStore = useArticleStore();
+const productStore = useProductStore();
+
+// Fetch articles and products when the component is mounted
+onMounted(() => {
+  articleStore.fetchArticles(); 
+  productStore.fetchProducts(); // Assuming you have a similar fetchProducts method
+});
+</script>
